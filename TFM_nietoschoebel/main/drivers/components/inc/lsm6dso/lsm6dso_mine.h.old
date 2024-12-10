@@ -1,0 +1,20 @@
+/*
+ * lsm6dso.h
+ *
+ *  Created on: 26 feb 2024
+ *      Author: nietoschoebel
+ */
+
+#ifndef MAIN_DRIVERS_BSP_COMPONENTS_INC_LSM6DSO_LSM6DSO_H_
+#define MAIN_DRIVERS_BSP_COMPONENTS_INC_LSM6DSO_LSM6DSO_H_
+
+#include <stdint.h>
+#include "commonTypes.h"
+#include <stdio.h>
+
+int32_t LSM6DSO_Initialize(void);
+int32_t LSM6DSO_Terminate(void);
+int32_t LSM6DSO_Write(void* handle, uint8_t regAddress, uint8_t *buf, uint16_t length);
+int32_t LSM6DSO_Read(void* handle, uint8_t regAddress, uint8_t *buf, uint16_t length);
+
+#endif /* MAIN_DRIVERS_BSP_COMPONENTS_INC_LSM6DSO_LSM6DSO_H_ */

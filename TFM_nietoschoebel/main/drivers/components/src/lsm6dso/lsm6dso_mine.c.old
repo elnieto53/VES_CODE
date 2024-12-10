@@ -1,0 +1,40 @@
+/*
+ * lsm6dso.c
+ *
+ *  Created on: 26 feb 2024
+ *      Author: nietoschoebel
+ */
+
+#include <lsm6dso_mine.h>
+#include "driver/i2c.h"
+#include <stdio.h>
+#include "lsm6dso_reg.h"
+#include "esp_log.h"
+#include "esp32-i2cDriver.h"
+#include "deviceConfig.h"
+
+static SemaphoreHandle_t mutex_IMU;
+
+int32_t LSM6DSO_Initialize(void){				//OJO!!! El BHI360 y el LSM6DSO comparten linea de i2c (No inicializar 2 veces)
+	ESP_LOGI(I2C_TAG_0, "I2C Initialization\n");
+	i2c_line_0.mutex = mutex_IMU;
+	if(i2c_enabled(i2c_line_0) == RET_OK){
+		return i2c_master_Initialize(i2c_line_0);
+	}
+	return RET_ERROR;
+}
+
+int32_t LSM6DSO_Terminate(void){
+	ESP_LOGI(I2C_TAG_0, "I2C Termination\n");
+	return ic2_master_Terminate(i2c_line_0);
+}
+
+int32_t LSM6DSO_Write(void* handle, uint8_t regAddress, uint8_t *buf, uint16_t length){
+	ESP_LOGI(I2C_TAG_0, "I2C Writing\n");
+	return i2c_master_Write(LSM6DSO_I2C_ADD_L, regAddress, buf,  length, i2c_line_0);
+}
+
+int32_t LSM6DSO_Read(void* handle, uint8_t regAddress, uint8_t *buf, uint16_t length){
+	ESP_LOGI(I2C_TAG_0, "I2C Reading\n");
+	return i2c_master_Read(LSM6DSO_I2C_ADD_L, regAddress, buf,  length, i2c_line_0);
+}

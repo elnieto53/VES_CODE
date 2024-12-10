@@ -1,0 +1,32 @@
+/*
+ * bhi360.h
+ *
+ *  Created on: 27 feb 2024
+ *      Author: nietoschoebel
+ */
+
+#ifndef MAIN_DRIVERS_BSP_COMPONENTS_INC_BHI360_BHI360_H_
+#define MAIN_DRIVERS_BSP_COMPONENTS_INC_BHI360_BHI360_H_
+
+#include <stdbool.h>
+
+#include "bhy2.h"
+#include "bhi3.h"
+
+#include "esp32-i2cDriver.h"
+#include <stdint.h>
+#include "commonTypes.h"
+#include <stdio.h>
+
+#define BHI360_I2C_ADD_L                    0x28
+#define BHI360_I2C_ADD_H                    0x29
+
+#define MAX_BHI_READ_WRITE_LENGTH			32
+
+int8_t BHI306_Initialize(void);
+int8_t BHI360_Terminate(void);
+int8_t BHI360_Delay_us(uint32_t period_us, void *intf_ptr);
+int8_t BHI360_Write(uint8_t reg_addr, uint8_t *reg_data, uint32_t length, void *intf_ptr);
+int8_t BHI360_Read(uint8_t reg_addr, const uint8_t *reg_data, uint32_t length, void *intf_ptr);
+
+#endif /* MAIN_DRIVERS_BSP_COMPONENTS_INC_BHI360_BHI360_H_ */
